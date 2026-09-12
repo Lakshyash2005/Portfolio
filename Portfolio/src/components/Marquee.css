@@ -1,0 +1,150 @@
+.marquee-section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 50px 0;
+  background: transparent;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marquee-ribbon {
+  position: relative;
+  width: 110vw;
+  padding: 24px 0;
+  background: linear-gradient(
+    90deg,
+    rgba(12, 12, 16, 0.95) 0%,
+    rgba(18, 18, 24, 0.98) 50%,
+    rgba(12, 12, 16, 0.95) 100%
+  );
+  border-top: 1px solid rgba(255, 60, 60, 0.35);
+  border-bottom: 1px solid rgba(255, 60, 60, 0.35);
+  box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.9),
+              0 0 30px rgba(255, 30, 30, 0.12);
+  transform: rotate(-2.5deg) scale(1.05);
+  transform-origin: center center;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.marquee-line {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 36px;
+  padding-right: 36px;
+  animation: marqueeScroll linear infinite;
+}
+
+.marquee-track.reverse {
+  animation-direction: reverse;
+}
+
+.marquee-ribbon:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 36px;
+  white-space: nowrap;
+}
+
+.marquee-text {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: clamp(14px, 1.8vw, 19px);
+  font-weight: 800;
+  letter-spacing: 3.5px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.marquee-text:hover {
+  color: #ffffff;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.8);
+}
+
+.marquee-star {
+  color: #ff3a3a;
+  font-size: 17px;
+  line-height: 1;
+  display: inline-block;
+  text-shadow: 0 0 10px rgba(255, 58, 58, 0.9),
+               0 0 25px rgba(255, 58, 58, 0.5);
+  animation: starPulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes marqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes starPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.25) rotate(15deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .marquee-section {
+    padding: 35px 0;
+  }
+
+  .marquee-ribbon {
+    padding: 18px 0;
+    transform: rotate(-2deg) scale(1.06);
+  }
+
+  .marquee-track {
+    gap: 22px;
+    padding-right: 22px;
+  }
+
+  .marquee-item {
+    gap: 22px;
+  }
+
+  .marquee-text {
+    font-size: 13px;
+    letter-spacing: 2.2px;
+  }
+
+  .marquee-star {
+    font-size: 14px;
+  }
+}

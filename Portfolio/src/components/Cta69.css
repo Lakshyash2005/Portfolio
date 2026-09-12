@@ -1,0 +1,189 @@
+.cta69-section {
+  position: relative;
+  width: 100%;
+  min-height: 80vh;
+  padding: 120px 6vw;
+  background: #050507;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Giant scrolling backdrop marquee */
+.cta69-marquee-bg {
+  position: absolute;
+  inset: -20% -10%;
+  width: 120%;
+  height: 140%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+  transform: rotate(-3.5deg) skewX(-2deg);
+  transform-origin: center center;
+}
+
+.cta69-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: cta69MarqueeScroll 35s linear infinite;
+}
+
+.cta69-marquee-text {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: clamp(90px, 17vw, 240px);
+  font-weight: 900;
+  letter-spacing: -4px;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.045);
+  white-space: nowrap;
+  padding-right: 40px;
+}
+
+@keyframes cta69MarqueeScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Foreground Centered Content */
+.cta69-content {
+  position: relative;
+  z-index: 2;
+  max-width: 850px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Badge */
+.cta69-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  margin-bottom: 30px;
+}
+
+.cta69-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3a3a;
+  box-shadow: 0 0 8px #ff3a3a, 0 0 16px #ff3a3a;
+}
+
+/* Heading */
+.cta69-heading {
+  margin: 0;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: clamp(40px, 6.2vw, 80px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2.5px;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+/* Note */
+.cta69-note {
+  margin-top: 24px;
+  max-width: 580px;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.65);
+  text-wrap: balance;
+}
+
+/* Button */
+.cta69-action {
+  margin-top: 45px;
+}
+
+.cta69-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 36px;
+  background: #ffffff;
+  color: #050505;
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5),
+              0 0 25px rgba(255, 255, 255, 0.15);
+}
+
+.cta69-button-arrow {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.cta69-button:hover {
+  background: #ff3a3a;
+  color: #ffffff;
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 15px 35px rgba(255, 58, 58, 0.35),
+              0 0 30px rgba(255, 58, 58, 0.3);
+}
+
+.cta69-button:hover .cta69-button-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* Footnote */
+.cta69-footnote {
+  margin-top: 32px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .cta69-section {
+    padding: 80px 24px;
+    min-height: auto;
+  }
+
+  .cta69-heading {
+    font-size: clamp(32px, 8.5vw, 48px);
+    letter-spacing: -1.5px;
+  }
+
+  .cta69-note {
+    font-size: 15px;
+    margin-top: 18px;
+  }
+
+  .cta69-button {
+    padding: 15px 28px;
+    font-size: 13px;
+  }
+}
