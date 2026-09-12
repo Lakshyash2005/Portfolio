@@ -12,10 +12,7 @@ export default function Footer({ onOpenContact }) {
         <div className="footer-links">
           <a href="https://github.com/Lakshyash2005" target="_blank" rel="noreferrer">GITHUB</a>
           <a href="https://www.linkedin.com/in/lakshya-shrivastava" target="_blank" rel="noreferrer">LINKEDIN</a>
-          <a href="#" target="_blank" rel="noreferrer">TWITTER</a>
           <a href="#" target="_blank" rel="noreferrer">INSTAGRAM</a>
-          <a href="#" target="_blank" rel="noreferrer">LEETCODE</a>
-          <a href="#" target="_blank" rel="noreferrer">PEERLIST</a>
           <a href="mailto:shrivastavalakshya0909@gmail.com">EMAIL</a>
         </div>
         
