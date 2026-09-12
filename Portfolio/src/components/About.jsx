@@ -84,7 +84,7 @@ export default function About() {
 
             {/* Photo */}
             <img
-              src="/images/image1.png"
+              src="/images/profile.jpg"
               alt="Lakshya Shrivastava"
               className="about-image"
             />
