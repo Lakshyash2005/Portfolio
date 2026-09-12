@@ -61,15 +61,18 @@ export default function About() {
           </motion.div>
 
           <motion.div
-            className="about-image-card"
             style={{ y }}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.6, rotateZ: -12 }}
+            whileInView={{ opacity: 1, scale: 1, rotateZ: 0 }}
+            transition={{ type: "spring", stiffness: 120, damping: 14, delay: 0.1 }}
             viewport={{ once: true }}
-            onMouseMove={handleImageMouseMove}
-            onMouseLeave={handleImageMouseLeave}
+            className="about-card-wrapper"
           >
+            <div
+              className="about-image-card"
+              onMouseMove={handleImageMouseMove}
+              onMouseLeave={handleImageMouseLeave}
+            >
             {/* Cyberpunk HUD Reticles */}
             <div className="card-hud-corner corner-tl" />
             <div className="card-hud-corner corner-tr" />
@@ -102,6 +105,7 @@ export default function About() {
                 <span className="badge-role">CREATIVE DEV</span>
               </div>
               <div className="badge-icon">↗</div>
+            </div>
             </div>
           </motion.div>
         </div>
