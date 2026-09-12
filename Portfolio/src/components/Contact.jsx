@@ -33,10 +33,20 @@ export default function Contact({ isOpen, onClose }) {
     const formData = new FormData(e.target);
     
     // Add the Web3Forms Access Key from environment variables
-    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+    
+    if (!accessKey) {
+      console.error("Web3Forms Access Key is missing! Did you restart the server?");
+      alert("Error: Web3Forms Access Key is missing. Please restart your dev server.");
+      return;
+    }
+    
+    formData.append("access_key", accessKey);
 
     const object = Object.fromEntries(formData);
     const json = JSON.stringify(object);
+    
+    console.log("Submitting form data:", object);
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -48,6 +58,7 @@ export default function Contact({ isOpen, onClose }) {
         body: json
       });
       const result = await response.json();
+      console.log("Web3Forms response:", result);
       
       if (result.success) {
         setSubmitted(true);
@@ -55,9 +66,12 @@ export default function Contact({ isOpen, onClose }) {
           setSubmitted(false);
           onClose();
         }, 3000);
+      } else {
+        alert("Form submission failed: " + result.message);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      alert("Network error: Could not submit form.");
     }
   };
 
