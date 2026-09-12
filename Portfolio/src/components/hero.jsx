@@ -101,7 +101,7 @@ export default function Hero() {
         >
           <img
             className="portfolio-image image-two"
-            src="/images/image45.png"
+            src="/images/image2.jpg"
             alt="Portfolio Hover"
           />
           <div className="hover-content">
