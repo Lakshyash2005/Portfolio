@@ -52,7 +52,7 @@ export default function Hero() {
   }, [mousePos.x, mousePos.y, radius]);
 
   return (
-    <section className="portfolio-section">
+    <section className="portfolio-section" id="home">
       <div
         className="portfolio-card"
         ref={cardRef}
