@@ -317,6 +317,116 @@ a.project-arrow {
 }
 
 /* =========================================
+   TECH STACK SECTION
+========================================= */
+
+.techstack-section {
+  margin-top: 120px;
+  padding-top: 0;
+}
+
+.techstack-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 50px;
+}
+
+.techstack-label {
+  font-size: 12px;
+  letter-spacing: 4px;
+  opacity: 0.5;
+  white-space: nowrap;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.techstack-line {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.techstack-title {
+  font-size: clamp(40px, 6vw, 90px);
+  line-height: 0.9;
+  letter-spacing: -3px;
+  font-weight: 700;
+  margin: 0 0 60px 0;
+}
+
+.techstack-title .dim {
+  opacity: 0.35;
+}
+
+/* GRID */
+.techstack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 1400px;
+}
+
+/* CATEGORY */
+.techstack-category {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.techstack-category-label {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ITEMS */
+.techstack-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.techstack-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "Space Grotesk", sans-serif;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: default;
+  transition: all 0.35s ease;
+}
+
+.techstack-icon {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.35s ease;
+}
+
+.techstack-item:hover {
+  border-color: rgba(255, 58, 58, 0.5);
+  color: #fff;
+  background: rgba(255, 58, 58, 0.08);
+  box-shadow: 0 0 20px rgba(255, 58, 58, 0.12),
+              0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.techstack-item:hover .techstack-icon {
+  color: #ff3a3a;
+}
+
+/* =========================================
    RESPONSIVE
 ========================================= */
 
@@ -372,6 +482,22 @@ a.project-arrow {
   .project-meta-row {
     gap: 12px;
   }
+
+  /* Tech Stack responsive */
+  .techstack-section {
+    margin-top: 80px;
+  }
+
+  .techstack-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .techstack-title {
+    font-size: clamp(36px, 8vw, 60px);
+    letter-spacing: -2px;
+    margin-bottom: 40px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -387,4 +513,15 @@ a.project-arrow {
     font-size: 10px;
     padding: 5px 12px;
   }
+
+  .techstack-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .techstack-item {
+    font-size: 12px;
+    padding: 8px 16px;
+  }
 }
+

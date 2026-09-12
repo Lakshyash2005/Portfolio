@@ -1,0 +1,136 @@
+.footer {
+  background: #050505;
+  color: white;
+  padding: 100px 5vw 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+}
+
+.footer-label {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.footer-email {
+  font-size:2rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.3s ease;
+}
+
+.footer-email:hover {
+  color: #f5c2c2;
+}
+
+.footer-social-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  font-size: 22px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.footer-social-icons a:hover {
+  background: #ff3a3a;
+  color: white;
+  transform: translateY(-4px);
+}
+
+.footer-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 40px;
+}
+
+.footer-middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 60px;
+  font-weight: 500;
+}
+
+.footer-bottom-text {
+  font-size: clamp(50px, 14vw, 300px);
+  font-weight: 800;
+  line-height: 0.85;
+  text-align: center;
+  letter-spacing: -0.04em;
+  margin-top: auto;
+  padding-bottom: 20px;
+  white-space: nowrap;
+  user-select: none;
+  
+  color: white;
+  transform: translateY(0) scale(1);
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.footer-bottom-text:hover {
+  transform: translateY(-15px) scale(1.02);
+  
+  background: linear-gradient(90deg, #ff3a3a, #ff9800, #ff3a3a);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 80px 24px 0;
+  }
+  
+  .footer-top {
+    flex-direction: column;
+    gap: 50px;
+  }
+  
+  .footer-middle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .footer-bottom-text {
+    font-size: clamp(80px, 20vw, 200px);
+  }
+}

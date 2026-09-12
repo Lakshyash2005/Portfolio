@@ -2,6 +2,15 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import "./Projects.css";
 
+import {
+  SiReact, SiJavascript, SiHtml5, SiCss, SiFramer, SiVite,
+  SiPython, SiSpringboot, SiDjango,
+  SiGit, SiGithub, SiShopify, SiVercel, SiVscodium, SiFigma,
+  SiGoogleanalytics, SiGoogletagmanager,
+} from "react-icons/si";
+import { FaJava, FaNodeJs, FaMobileAlt, FaPaintBrush, FaSearch, FaChartLine, FaBullseye } from "react-icons/fa";
+
+
 const projects = [
   {
     id: "01",
@@ -98,6 +107,52 @@ const projects = [
   },
 ];
 
+const techStack = [
+  {
+    category: "FRONTEND",
+    items: [
+      { icon: <SiReact />, label: "React" },
+      { icon: <SiJavascript />, label: "JavaScript" },
+      { icon: <SiHtml5 />, label: "HTML5" },
+      { icon: <SiCss />, label: "CSS3" },
+      { icon: <SiFramer />, label: "Framer Motion" },
+      { icon: <SiVite />, label: "Vite" },
+      { icon: <FaMobileAlt />, label: "Responsive" },
+    ],
+  },
+  {
+    category: "BACKEND",
+    items: [
+      { icon: <SiPython />, label: "Python" },
+      { icon: <FaJava />, label: "Java" },
+      { icon: <SiSpringboot />, label: "Spring Boot" },
+      { icon: <FaNodeJs />, label: "Node.js" },
+      { icon: <SiDjango />, label: "Django" },
+    ],
+  },
+  {
+    category: "TOOLS & PLATFORMS",
+    items: [
+      { icon: <SiGit />, label: "Git" },
+      { icon: <SiGithub />, label: "GitHub" },
+      { icon: <SiShopify />, label: "Shopify" },
+      { icon: <SiVercel />, label: "Vercel" },
+      { icon: <SiVscodium />, label: "VS Code" },
+      { icon: <SiFigma />, label: "Figma" },
+    ],
+  },
+  {
+    category: "DESIGN & SEO",
+    items: [
+      { icon: <FaPaintBrush />, label: "UI/UX" },
+      { icon: <SiGoogleanalytics />, label: "Analytics" },
+      { icon: <SiGoogletagmanager />, label: "GTM" },
+      { icon: <FaSearch />, label: "SEO" },
+      { icon: <FaBullseye />, label: "Meta Pixel" },
+      { icon: <FaChartLine />, label: "Branding" },
+    ],
+  },
+];
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState(null);
@@ -219,6 +274,60 @@ export default function Projects() {
             </div>
           </motion.article>
         ))}
+      </div>
+
+      {/* =========================================
+          TECH STACK SECTION
+      ========================================= */}
+      <div className="techstack-section">
+        <motion.div
+          className="techstack-header"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <span className="techstack-label">stack/03</span>
+          <span className="techstack-line" />
+        </motion.div>
+
+        <motion.h3
+          className="techstack-title"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          viewport={{ once: true }}
+        >
+          TECH <span className="dim">STACK.</span>
+        </motion.h3>
+
+        <div className="techstack-grid">
+          {techStack.map((group, groupIndex) => (
+            <motion.div
+              key={group.category}
+              className="techstack-category"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: groupIndex * 0.12 }}
+              viewport={{ once: true }}
+            >
+              <span className="techstack-category-label">{group.category}</span>
+              <div className="techstack-items">
+                {group.items.map((item, i) => (
+                  <motion.span
+                    key={i}
+                    className="techstack-item"
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  >
+                    <span className="techstack-icon">{item.icon}</span>
+                    {item.label}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

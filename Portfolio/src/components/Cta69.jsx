@@ -3,8 +3,9 @@ import "./Cta69.css";
 const REPEATS = 1;
 
 export default function Cta69({
+  onOpenContact,
   badge = { label: "GET IN TOUCH" },
-  heading = "Let's make something worth keeping.",
+  heading = "LET'S BUILD SOMETHING GREAT.",
   button = {
     label: "Start the conversation",
     href: `https://wa.me/918319013690?text=${encodeURIComponent(
@@ -38,7 +39,11 @@ export default function Cta69({
       {/* Centered foreground content */}
       <div className="cta69-content">
         {badge && (
-          <div className="cta69-badge">
+          <div
+            className="cta69-badge"
+            style={{ cursor: "pointer" }}
+            onClick={onOpenContact}
+          >
             <span className="cta69-badge-dot" />
             <span>{badge.label}</span>
           </div>
@@ -49,7 +54,15 @@ export default function Cta69({
         {labels.note && <p className="cta69-note">{labels.note}</p>}
 
         {button && (
-          <div className="cta69-action">
+          <div className="cta69-action" style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
+            <button
+              onClick={onOpenContact}
+              className="cta69-button"
+              style={{ cursor: "pointer" }}
+            >
+              <span>Fill Contact Form</span>
+              <span className="cta69-button-arrow">✉</span>
+            </button>
             <a
               href={button.href}
               target="_blank"
