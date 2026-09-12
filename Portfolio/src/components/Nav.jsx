@@ -1,16 +1,37 @@
 import "./nav.css";
+import Magnetic from "./Magnetic";
 
 export default function Nav({ onOpenContact }) {
   return (
-    <nav className="navbar">
-      <a href="#home" className="logo">
-        Lakshya Shrivastava
-      </a>
+    <nav className="pill-nav">
+      <Magnetic>
+        <a href="#home" className="pill-nav-item">
+          Home
+        </a>
+      </Magnetic>
+      
+      <div className="pill-nav-separator" />
+      
+      <Magnetic>
+        <a href="#about" className="pill-nav-item">
+          About
+        </a>
+      </Magnetic>
+      
+      <div className="pill-nav-separator" />
+      
+      <Magnetic>
+        <a href="#projects" className="pill-nav-item">
+          Projects
+        </a>
+      </Magnetic>
 
-      <div className="nav-links">
-        <a href="#about">ABOUT ME</a>
-        <a
-          href="#contact"
+      <div className="pill-nav-separator" />
+
+      <Magnetic>
+        <a 
+          href="#contact" 
+          className="pill-nav-item"
           onClick={(e) => {
             if (onOpenContact) {
               e.preventDefault();
@@ -18,9 +39,9 @@ export default function Nav({ onOpenContact }) {
             }
           }}
         >
-          CONTACT
+          Contact
         </a>
-      </div>
+      </Magnetic>
     </nav>
   );
 }

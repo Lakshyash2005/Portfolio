@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useState, useRef } from "react";
 import "./Projects.css";
 
 import {
@@ -51,7 +51,7 @@ const projects = [
   },
   {
     id: "03",
-    title: "Ayush Academy",
+    title: "Astro Vedaa",
     subtitle: "Graphy Course Platform",
     description:
       "Designed and customized a complete online course platform on Graphy for Ayush Awasthi — the youngest verified astro-palmist. The platform hosts certification programs in Astrology, Palmistry, and Numerology with 25,000+ enrolled students.",
@@ -154,22 +154,110 @@ const techStack = [
   },
 ];
 
-export default function Projects() {
-  const [activeProject, setActiveProject] = useState(null);
+const StickyCard = ({ project, index, progress, range, targetScale }) => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+
+  // Scale down and dim the card as the global scroll progresses
+  const scale = useTransform(progress, range, [1, targetScale]);
+  const opacity = useTransform(progress, range, [1, 0.3]);
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   return (
-    <section className="projects" id="projects">
+    <div className="sticky-card-wrapper" style={{ top: `calc(15vh + ${index * 30}px)` }}>
+      <motion.article
+        ref={cardRef}
+        className={`bento-item sticky-card interactive`}
+        style={{ scale, opacity }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {/* Spotlight Overlay */}
+        <motion.div
+          className="bento-spotlight"
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+          style={{
+            background: `radial-gradient(800px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.06), transparent 40%)`
+          }}
+        />
+        
+        {/* Massive Watermark */}
+        <div className="bento-watermark">{project.id}</div>
+
+        <div className="bento-content-wrapper sticky-card-content">
+          
+          <div className="sticky-left">
+            <div className="bento-meta">
+              <span className="bento-type">{project.type}</span>
+              <span className="bento-year">{project.year}</span>
+            </div>
+            
+            <div className="bento-tech sticky-tech">
+              {project.tech.map((t, i) => (
+                <span key={i} className="bento-tag">{t}</span>
+              ))}
+            </div>
+          </div>
+
+          <div className="sticky-right">
+            <h3 className="bento-title sticky-title">
+              {project.link ? (
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="bento-link">
+                  {project.title} ↗
+                </a>
+              ) : (
+                project.title
+              )}
+            </h3>
+            <p className="bento-desc sticky-desc">{project.description}</p>
+          </div>
+
+        </div>
+      </motion.article>
+    </div>
+  );
+};
+
+export default function Projects() {
+  const containerRef = useRef(null);
+  
+  // Track scroll progress of the entire Projects section for the parallax scale effect
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  return (
+    <section className="projects" id="projects" ref={containerRef}>
+      <div className="focused-container">
       {/* Section Header */}
       <div className="projects-top">
         <span className="projects-label">projects/02</span>
-        <span className="projects-line" />
+        <motion.span 
+          className="projects-line" 
+          initial={{ scaleX: 0 }} 
+          whileInView={{ scaleX: 1 }} 
+          transition={{ duration: 1, ease: "easeOut" }} 
+          style={{ transformOrigin: "left" }} 
+        />
       </div>
 
       <motion.div
         className="projects-heading-wrap"
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         viewport={{ once: true }}
       >
         <h2 className="projects-heading">
@@ -180,102 +268,26 @@ export default function Projects() {
         </p>
       </motion.div>
 
-      {/* Project List */}
-      <div className="projects-list">
-        {projects.map((project, index) => (
-          <motion.article
-            key={project.id}
-            className={`project-item ${activeProject === index ? "active" : ""}`}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: index * 0.1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            onMouseEnter={() => setActiveProject(index)}
-            onMouseLeave={() => setActiveProject(null)}
-          >
-            {/* Top row: number + type + year */}
-            <div className="project-meta-row">
-              <span className="project-number">{project.id}</span>
-              <span className="project-type">{project.type}</span>
-              <span className="project-year">{project.year}</span>
-            </div>
-
-            {/* Title row */}
-            <div className="project-title-row">
-              <h3 className="project-title">
-                {project.link ? (
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-title-link"
-                  >
-                    {project.title}
-                  </a>
-                ) : (
-                  project.title
-                )}
-              </h3>
-              <span className="project-subtitle">{project.subtitle}</span>
-              {project.link ? (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-arrow"
-                >
-                  ↗
-                </a>
-              ) : (
-                <span className="project-arrow">↗</span>
-              )}
-            </div>
-
-            {/* Expandable content */}
-            <motion.div
-              className="project-expand"
-              initial={false}
-              animate={{
-                height: activeProject === index ? "auto" : 0,
-                opacity: activeProject === index ? 1 : 0,
-              }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="project-expand-inner">
-                <p className="project-description">{project.description}</p>
-
-                <div className="project-details">
-                  <div className="project-work">
-                    <span className="detail-label">KEY WORK</span>
-                    <ul>
-                      {project.work.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="project-tech">
-                    <span className="detail-label">TECH STACK</span>
-                    <div className="tech-tags">
-                      {project.tech.map((t, i) => (
-                        <span key={i} className="tech-tag">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Bottom separator line */}
-            <div className="project-separator">
-              <div className="separator-fill" />
-            </div>
-          </motion.article>
-        ))}
+      {/* Sticky Card Stack */}
+      <div className="projects-sticky-stack">
+        {projects.map((project, index) => {
+          // Calculate parallax scale target based on position in stack
+          const targetScale = 1 - ((projects.length - index) * 0.04);
+          const range = [index * (1 / projects.length), 1];
+          
+          return (
+            <StickyCard 
+              key={project.id} 
+              project={project} 
+              index={index} 
+              progress={scrollYProgress}
+              range={range}
+              targetScale={targetScale}
+            />
+          );
+        })}
       </div>
-
+      
       {/* =========================================
           TECH STACK SECTION
       ========================================= */}
@@ -284,18 +296,24 @@ export default function Projects() {
           className="techstack-header"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           viewport={{ once: true }}
         >
           <span className="techstack-label">stack/03</span>
-          <span className="techstack-line" />
+          <motion.span 
+            className="techstack-line" 
+            initial={{ scaleX: 0 }} 
+            whileInView={{ scaleX: 1 }} 
+            transition={{ duration: 1, ease: "easeOut" }} 
+            style={{ transformOrigin: "left" }} 
+          />
         </motion.div>
 
         <motion.h3
           className="techstack-title"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.04, ease: "easeOut" }}
           viewport={{ once: true }}
         >
           TECH <span className="dim">STACK.</span>
@@ -308,7 +326,7 @@ export default function Projects() {
               className="techstack-category"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: groupIndex * 0.12 }}
+              transition={{ duration: 0.4, delay: groupIndex * 0.04, ease: "easeOut" }}
               viewport={{ once: true }}
             >
               <span className="techstack-category-label">{group.category}</span>
@@ -317,7 +335,8 @@ export default function Projects() {
                   <motion.span
                     key={i}
                     className="techstack-item"
-                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={{ type: "spring", stiffness: 400, damping: 17 }}
                   >
                     <span className="techstack-icon">{item.icon}</span>
@@ -328,6 +347,7 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

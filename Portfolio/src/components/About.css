@@ -1,6 +1,6 @@
 .about {
   min-height: 100vh;
-  padding: 140px 8vw;
+  padding: 140px 0;
   background: #050505;
   color: white;
   position: relative;
@@ -281,13 +281,43 @@
   max-width: 900px;
 }
 
-/* HEADING */
-.about-content h2 {
+/* HEADING & INTERACTIVE TEXT EFFECT */
+.about-interactive-text {
+  position: relative;
+  display: inline-block;
   margin: 0;
+  cursor: default;
+}
+
+.about-text-content {
+  position: relative;
+  z-index: 2;
   font-size: clamp(48px, 7vw, 110px);
   line-height: 0.9;
   letter-spacing: -4px;
   font-weight: 700;
+  color: #fff;
+}
+
+/* When the container is hovered, all letters become ghost outlines */
+.about-interactive-text:hover .about-text-content span {
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.25);
+  transition: all 0.3s ease;
+}
+
+/* When an individual letter is hovered, it lights up red and bounces */
+.about-interactive-text .about-text-content span:hover {
+  color: #ff3a3a !important;
+  -webkit-text-stroke: 0px;
+  transform: translateY(-8px) scale(1.1) rotate(-4deg) !important;
+  text-shadow: 0 10px 20px rgba(255, 58, 58, 0.4);
+  transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.about-interactive-text .about-text-content span {
+  transition: all 0.4s ease;
+  transform-origin: bottom center;
 }
 
 .about-content h2 span,

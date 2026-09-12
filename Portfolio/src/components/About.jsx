@@ -1,8 +1,17 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import BlurText from "./BlurText";
+import Magnetic from "./Magnetic";
 import "./About.css";
 
 export default function About() {
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start end", "end start"]
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [-80, 80]);
+
   const handleImageMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -26,10 +35,17 @@ export default function About() {
   };
 
   return (
-    <section className="about" id="about">
-      <div className="about-top">
+    <section className="about" id="about" ref={container}>
+      <div className="focused-container">
+        <div className="about-top">
         <span className="about-label">about/01</span>
-        <span className="about-line"></span>
+        <motion.span 
+          className="about-line"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{ transformOrigin: "left" }}
+        />
       </div>
 
       <div className="about-grid">
@@ -46,9 +62,10 @@ export default function About() {
 
           <motion.div
             className="about-image-card"
-            initial={{ opacity: 0, scale: 0.95, y: 40 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            style={{ y }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
             viewport={{ once: true }}
             onMouseMove={handleImageMouseMove}
             onMouseLeave={handleImageMouseLeave}
@@ -64,7 +81,7 @@ export default function About() {
 
             {/* Photo */}
             <img
-              src="/images/image3.png"
+              src="/images/image1.png"
               alt="Lakshya Shrivastava"
               className="about-image"
             />
@@ -96,34 +113,36 @@ export default function About() {
           transition={{ duration: 0.9 }}
           viewport={{ once: true }}
         >
-          <h2>
-            <BlurText
-              text="I BUILD"
-              delay={60}
-              animateBy="letters"
-              direction="top"
-              className="about-blur-line"
-            />
-            <br />
-            <BlurText
-              text="DIGITAL"
-              delay={60}
-              animateBy="letters"
-              direction="top"
-              className="about-blur-line about-blur-dim"
-            />
-            <br />
-            <BlurText
-              text="EXPERIENCES."
-              delay={60}
-              animateBy="letters"
-              direction="top"
-              className="about-blur-line"
-            />
+          <h2 className="about-interactive-text">
+            <div className="about-text-content">
+              <BlurText
+                text="I BUILD"
+                delay={60}
+                animateBy="letters"
+                direction="top"
+                className="about-blur-line"
+              />
+              <br />
+              <BlurText
+                text="DIGITAL"
+                delay={60}
+                animateBy="letters"
+                direction="top"
+                className="about-blur-line about-blur-dim"
+              />
+              <br />
+              <BlurText
+                text="EXPERIENCES."
+                delay={60}
+                animateBy="letters"
+                direction="top"
+                className="about-blur-line"
+              />
+            </div>
           </h2>
 
           <p className="about-description">
-            I’m Lakshya — a developer who enjoys turning ideas into digital experiences. I care about clean interfaces, thoughtful interactions, and the small details that make a website feel alive. I’m constantly learning, experimenting, and building — with the goal of creating work that is not only functional, but memorable.
+            I’m Lakshya — a developer who enjoys turning ideas into digital experiences I care about clean interfaces, thoughtful interactions, and the small details that make a website feel alive. I’m constantly learning, experimenting, and building — with the goal of creating work that is not only functional, but memorable.
           </p>
 
           <div className="about-info">
@@ -141,11 +160,14 @@ export default function About() {
             </div>
           </div>
 
-          <a href="#projects" className="about-button">
-            Explore my work
-            <span>↗</span>
-          </a>
+          <Magnetic>
+            <a href="#projects" className="about-button">
+              Explore my work
+              <span>↗</span>
+            </a>
+          </Magnetic>
         </motion.div>
+      </div>
       </div>
     </section>
   );

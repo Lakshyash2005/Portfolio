@@ -1,58 +1,37 @@
-import { FaLinkedinIn, FaInstagram, FaGithub } from "react-icons/fa";
+import { motion } from "framer-motion";
 import "./Footer.css";
 
 export default function Footer({ onOpenContact }) {
   return (
     <footer className="footer">
-      <div className="footer-top">
-        <div className="footer-top-left">
-          <span className="footer-label">Email</span>
-          <a href="mailto:hello@lakshya.com" className="footer-email">
-          shrivastavalakshya0909@gmail.com
-          </a>
+      <div className="footer-content">
+        <h1 className="footer-huge-text">
+          Lakshya Shrivastava
+        </h1>
+        
+        <div className="footer-links">
+          <a href="https://github.com/Lakshyash2005" target="_blank" rel="noreferrer">GITHUB</a>
+          <a href="https://www.linkedin.com/in/lakshya-shrivastava" target="_blank" rel="noreferrer">LINKEDIN</a>
+          <a href="#" target="_blank" rel="noreferrer">TWITTER</a>
+          <a href="#" target="_blank" rel="noreferrer">INSTAGRAM</a>
+          <a href="#" target="_blank" rel="noreferrer">LEETCODE</a>
+          <a href="#" target="_blank" rel="noreferrer">PEERLIST</a>
+          <a href="mailto:shrivastavalakshya0909@gmail.com">EMAIL</a>
         </div>
         
-        <div className="footer-top-right">
-          <span className="footer-label">Social</span>
-          <div className="footer-social-icons">
-            <a
-              href="https://www.linkedin.com/in/lakshya-shrivastava"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-            >
-              <FaLinkedinIn />
-            </a>
-            <a
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Instagram"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://github.com/Lakshyash2005"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-            >
-              <FaGithub />
-            </a>
-          </div>
+        <div className="footer-copyright">
+          © 2026 All Rights Reserved.
         </div>
       </div>
 
-      <div className="footer-divider"></div>
-
-      <div className="footer-middle">
-       
-        <span>© 2026 Lakshya Shrivastava</span>
-      </div>
-
-      <div className="footer-bottom-text">
-        LAKSHYA
-      </div>
+      <motion.button 
+        className="footer-fab" 
+        onClick={onOpenContact}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        +
+      </motion.button>
     </footer>
   );
 }

@@ -4,7 +4,7 @@
   font-weight: 400;
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.9);
-  background-color: #050505;
+  background-color: #000000;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -24,6 +24,6 @@ html, body, #root {
 }
 
 body {
-  background: #050505;
+  background: #000000;
   overflow-x: hidden;
 }

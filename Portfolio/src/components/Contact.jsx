@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Magnetic from "./Magnetic";
 import "./Contact.css";
 
 export default function Contact({ isOpen, onClose }) {
@@ -89,19 +90,21 @@ export default function Contact({ isOpen, onClose }) {
           <motion.div
             className="contact-container"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            animate={{ opacity: 1, y: 0, scale: 1, transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] } }}
+            exit={{ opacity: 0, y: 30, scale: 0.95, transition: { duration: 0.2, ease: "easeIn" } }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* CLOSE BUTTON */}
-            <button
-              className="contact-close-btn"
-              onClick={onClose}
-              aria-label="Close form"
-            >
-              ✕
-            </button>
+            <Magnetic>
+              <motion.button
+                className="contact-close-btn"
+                onClick={onClose}
+                aria-label="Close form"
+                whileTap={{ scale: 0.92 }}
+              >
+                ✕
+              </motion.button>
+            </Magnetic>
 
             <div className="contact-top">
               <span>CONTACT / 04</span>
@@ -172,10 +175,12 @@ export default function Contact({ isOpen, onClose }) {
                     ></textarea>
                   </div>
 
-                  <button type="submit">
-                    SEND MESSAGE
-                    <span>↗</span>
-                  </button>
+                  <Magnetic>
+                    <motion.button type="submit" whileTap={{ scale: 0.98 }}>
+                      SEND MESSAGE
+                      <span>↗</span>
+                    </motion.button>
+                  </Magnetic>
                 </form>
               )}
             </div>

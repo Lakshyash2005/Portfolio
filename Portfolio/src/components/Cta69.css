@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 80vh;
-  padding: 120px 6vw;
+  padding: 120px 0;
   background: #050507;
   overflow: hidden;
   display: flex;
@@ -32,7 +32,6 @@
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: cta69MarqueeScroll 35s linear infinite;
 }
 
 .cta69-marquee-text {

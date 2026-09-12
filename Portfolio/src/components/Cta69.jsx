@@ -1,3 +1,6 @@
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import Magnetic from "./Magnetic";
 import "./Cta69.css";
 
 const REPEATS = 1;
@@ -24,20 +27,28 @@ export default function Cta69({
     ? `${marqueePhrase} ✦ `.repeat(REPEATS)
     : "";
 
+  const container = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: container,
+    offset: ["start end", "end start"]
+  });
+  const x = useTransform(scrollYProgress, [0, 1], [0, -400]);
+
   return (
-    <section className={`cta69-section ${className}`} id="contact">
+    <section className={`cta69-section ${className}`} id="contact" ref={container}>
       {/* Giant scrolling backdrop marquee */}
       {marqueePhrase && (
         <div aria-hidden="true" className="cta69-marquee-bg">
-          <div className="cta69-marquee-track">
+          <motion.div className="cta69-marquee-track" style={{ x }}>
             <span className="cta69-marquee-text">{marqueeLine}</span>
             <span className="cta69-marquee-text">{marqueeLine}</span>
-          </div>
+          </motion.div>
         </div>
       )}
 
       {/* Centered foreground content */}
-      <div className="cta69-content">
+      <div className="focused-container">
+        <div className="cta69-content">
         {badge && (
           <div
             className="cta69-badge"
@@ -55,29 +66,34 @@ export default function Cta69({
 
         {button && (
           <div className="cta69-action" style={{ display: "flex", gap: "15px", justifyContent: "center", flexWrap: "wrap" }}>
-            <button
-              onClick={onOpenContact}
-              className="cta69-button"
-              style={{ cursor: "pointer" }}
-            >
-              <span>Fill Contact Form</span>
-              <span className="cta69-button-arrow">✉</span>
-            </button>
-            <a
-              href={button.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta69-button"
-            >
-              <span>{button.label}</span>
-              <span className="cta69-button-arrow">↗</span>
-            </a>
+            <Magnetic>
+              <button
+                onClick={onOpenContact}
+                className="cta69-button"
+                style={{ cursor: "pointer" }}
+              >
+                <span>Fill Contact Form</span>
+                <span className="cta69-button-arrow">✉</span>
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <a
+                href={button.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta69-button"
+              >
+                <span>{button.label}</span>
+                <span className="cta69-button-arrow">↗</span>
+              </a>
+            </Magnetic>
           </div>
         )}
 
         {labels.footnote && (
           <p className="cta69-footnote">{labels.footnote}</p>
         )}
+        </div>
       </div>
     </section>
   );

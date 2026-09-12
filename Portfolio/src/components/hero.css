@@ -1,196 +1,139 @@
-.portfolio-card {
+.hero-section {
   position: relative;
-
-  width: calc(100vw - 2px);
-  height: calc(100vh - 2px);
-
-  overflow: hidden;
-
-  cursor: pointer;
-
-  background: #111;
-
-  border-radius: 2px;
-}
-
-/* Both images */
-.portfolio-image {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit:cover;
-}
-
-/* Original image */
-.image-one {
-  transform: scale(1);
-  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* =========================
-   SVG Rough Circle Overlay
-========================= */
-
-.stamp-svg-overlay {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Outer glow layer */
-.rough-border-outer {
-  fill: none;
-  stroke: rgba(200, 20, 0, 0.5);
-  stroke-width: 8px;
-  filter: drop-shadow(0 0 12px rgba(200, 20, 0, 0.7))
-          drop-shadow(0 0 30px rgba(180, 0, 0, 0.5))
-          drop-shadow(0 0 60px rgba(140, 0, 0, 0.3));
-}
-
-/* Inner crisp red line */
-.rough-border-inner {
-  fill: none;
-  stroke: rgba(220, 30, 10, 0.9);
-  stroke-width: 2.5px;
-  filter: drop-shadow(0 0 4px rgba(255, 60, 20, 0.8));
-}
-
-/* =========================
-   Hover Layer
-========================= */
-
-.hover-layer {
-  position: absolute;
-
-  inset: 0;
-
-  transition: opacity 0.2s ease;
-}
-
-/* Hover image */
-.image-two {
-  transform: scale(1.04);
-
-  transition:
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Dark overlay */
-.hover-layer::after {
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
-  background: rgba(0, 0, 0, 0.2);
-}
-
-/* Text */
-.hover-content {
-  position: absolute;
-   font-family: "Archivo Black", sans-serif;
-  font-weight: 1200;
-  /* font-style: normal; */
-  
-  z-index: 5;
-  
-  inset: 0;
-  padding-top:200px ;
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: top;
-
-  align-items: center;
-
-  color: white;
-
-  text-align: center;
-
-  opacity: 0;
-
-  transform: scale(0.8);
-
-  transition:
-    opacity 0.6s ease 0.3s,
-    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hover-content span {
-  font-size: 50px;
-
-  letter-spacing: 5px;
-  align-items: end;
-  justify-content: end;
-  margin-bottom: 10px;
-
-  opacity: 0.7;
-}
-
-.hover-content h2 {
-  margin: 0;
-  margin-top: 300px;
-  font-size: clamp(50px, 8vw, 110px);
-  line-height: 0.9;
-  letter-spacing: 5px;
-}
-
-/* =========================
-   HOVER STATES
-========================= */
-
-.portfolio-card:hover .image-one {
-  transform: scale(1.06);
-}
-
-.portfolio-card:hover .image-two {
-  transform: scale(1);
-}
-
-.portfolio-card:hover .hover-content {
-  opacity: 1;
-
-  transform: scale(1);
-}
-
-/* =========================
-   Section Container
-========================= */
-
-.portfolio-section {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
-
+  background: #000000;
+  overflow: hidden;
   display: flex;
-
   align-items: center;
   justify-content: center;
+  padding: 0 8vw;
+}
 
-  padding: 1px;
+.hero-canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
 
-  background: #050505;
+.hero-typography {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* Removed mix-blend-mode to allow the true gradient colors to shine */
+}
 
+.hero-title {
+  font-family: 'Syncopate', sans-serif;
+  font-size: clamp(3rem, 10vw, 12rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.hero-title span {
+  display: inline-block;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: crosshair;
+}
+
+/* Default state for first word (LAKSHYA) */
+.hero-title > div:first-child {
+  /* No parent gradient needed anymore */
+}
+
+.hero-title > div:first-child span {
+  color: #ffffff !important;
+}
+
+.hero-title > div:first-child span:hover {
+  background: linear-gradient(90deg, #ffffff 0%, #ff3a3a 50%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: gradientShine 2s linear infinite;
+  text-shadow: 0 0 20px rgba(255, 58, 58, 0.3);
+  transform: translateY(-8px) scale(1.05) rotate(-3deg) !important;
+}
+
+@keyframes gradientShine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.hero-title-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
+}
+
+.hero-title-outline span:hover {
+  color: #ff3a3a !important;
+  -webkit-text-stroke: 0px;
+  text-shadow: 0 0 20px rgba(255, 58, 58, 0.4);
+  transform: translateY(-8px) scale(1.05) rotate(3deg) !important;
+}
+
+.hero-metadata {
+  position: absolute;
+  bottom: 40px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  text-align: left;
+}
+
+.meta-left {
+  left: 0;
+}
+
+.meta-right {
+  right: 0;
+  text-align: right;
+}
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
 
-/* Responsive */
+.scroll-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+}
+
 @media (max-width: 768px) {
-  .portfolio-card {
-    width: calc(100vw - 2px);
-    height: calc(100svh - 2px);
+  .hero-metadata {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin-top: 40px;
+    text-align: center;
   }
 
-  .hover-content h2 {
-    font-size: clamp(36px, 10vw, 60px);
-    letter-spacing: -2px;
+  .hero-scroll-indicator {
+    display: none;
   }
 }

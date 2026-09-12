@@ -1,115 +1,144 @@
-import { useState, useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { motion, useScroll, useTransform } from "framer-motion";
 import "./hero.css";
 
-// Generate rough hand-drawn jagged circle path
-function generateRoughCirclePath(cx, cy, radius, points = 60) {
-  if (radius <= 0) return "";
-  let d = "";
+const WireframeTorus = () => {
+  const meshRef = useRef();
+  const mouse = useRef({ x: 0, y: 0 });
 
-  for (let i = 0; i <= points; i++) {
-    const angle = (i / points) * Math.PI * 2;
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
-    // Irregular radius variation for rough/hand-drawn feel
-    const noise =
-      Math.sin(angle * 7) * 0.08 +
-      Math.sin(angle * 13) * 0.05 +
-      Math.cos(angle * 5) * 0.06 +
-      Math.sin(angle * 19) * 0.04;
-
-    const r = radius * (1 + noise);
-    const x = cx + r * Math.cos(angle);
-    const y = cy + r * Math.sin(angle);
-
-    if (i === 0) {
-      d += `M ${x.toFixed(2)} ${y.toFixed(2)}`;
-    } else {
-      d += ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
-    }
-  }
-  d += " Z";
-  return d;
-}
-
-export default function Hero() {
-  const cardRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0, w: 1000, h: 800 });
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setMousePos({ x, y, w: rect.width, h: rect.height });
-  };
-
-  const handleMouseEnter = () => setHovered(true);
-  const handleMouseLeave = () => setHovered(false);
-
-  const radius = hovered ? 165 : 0;
-  const roughPath = useMemo(() => {
-    return generateRoughCirclePath(mousePos.x, mousePos.y, radius, 80);
-  }, [mousePos.x, mousePos.y, radius]);
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const t = state.clock.elapsedTime;
+    
+    // Constant rotation + subtle mouse interaction
+    meshRef.current.rotation.x = t * 0.2 + mouse.current.y * 0.3;
+    meshRef.current.rotation.y = t * 0.3 + mouse.current.x * 0.3;
+  });
 
   return (
-    <section className="portfolio-section" id="home">
-      <div
-        className="portfolio-card"
-        ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        {/* SVG overlay for clip + rough border */}
-        <svg
-          className="stamp-svg-overlay"
-          width="100%"
-          height="100%"
-          viewBox={`0 0 ${mousePos.w} ${mousePos.h}`}
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <clipPath id="rough-clip">
-              {roughPath ? <path d={roughPath} /> : null}
-            </clipPath>
-          </defs>
+    <mesh ref={meshRef}>
+      <torusKnotGeometry args={[10, 3, 200, 32]} />
+      <meshBasicMaterial color="#555555" wireframe transparent opacity={0.3} />
+    </mesh>
+  );
+};
 
-          {/* Rough red outline */}
-          {hovered && roughPath && (
-            <>
-              <path d={roughPath} className="rough-border-outer" />
-              <path d={roughPath} className="rough-border-inner" />
-            </>
-          )}
-        </svg>
+export default function Hero() {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
 
-        {/* Base layer (image 1) */}
-        <img
-          className="portfolio-image image-one"
-          src="/images/image1.png"
-          alt="Portfolio"
-        />
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-        {/* Revealed layer clipped to rough shape */}
-        <div
-          className="hover-layer"
-          style={{
-            clipPath: hovered ? "url(#rough-clip)" : "none",
-            WebkitClipPath: hovered ? "url(#rough-clip)" : "none",
-            opacity: hovered ? 1 : 0,
-          }}
-        >
-          <img
-            className="portfolio-image image-two"
-            src="/images/image2.jpg"
-            alt="Portfolio Hover"
-          />
-          <div className="hover-content">
-            {/* <span>FEATURED WORK</span> */}
-            <h2>Explore Project</h2>
-          </div>
-        </div>
+  const title1 = "LAKSHYA".split("");
+  const title2 = "SHRIVASTAVA".split("");
+
+  const letterVariants = {
+    hidden: { opacity: 0, y: 50, filter: "blur(10px)", rotateX: -90 },
+    visible: (i) => ({
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      rotateX: 0,
+      transition: { duration: 0.8, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }
+    })
+  };
+
+  return (
+    <section className="hero-section" id="home" ref={containerRef}>
+      <motion.div style={{ scale, opacity, width: "100%", height: "100%", willChange: "transform, opacity" }}>
+      
+      {/* 3D Background */}
+      <div className="hero-canvas-container">
+        <Canvas camera={{ position: [0, 0, 30], fov: 50 }}>
+          <WireframeTorus />
+        </Canvas>
       </div>
+
+      {/* Massive Typographic Mask */}
+      <div className="hero-typography">
+        <h1 className="hero-title" style={{ perspective: "1000px" }}>
+          <div style={{ display: "inline-block" }}>
+            {title1.map((char, i) => (
+              <motion.span 
+                key={`t1-${i}`} 
+                custom={i} 
+                initial="hidden" 
+                animate="visible" 
+                variants={letterVariants}
+                style={{ display: "inline-block", transformOrigin: "bottom" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </div>
+          <br />
+          <div className="hero-title-outline" style={{ display: "inline-block" }}>
+            {title2.map((char, i) => (
+              <motion.span 
+                key={`t2-${i}`} 
+                custom={i + title1.length} 
+                initial="hidden" 
+                animate="visible" 
+                variants={letterVariants}
+                style={{ display: "inline-block", transformOrigin: "bottom" }}
+              >
+                {char}
+              </motion.span>
+            ))}
+          </div>
+        </h1>
+        
+        {/* Cinematic Metadata Subheadings */}
+        <div className="hero-metadata meta-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 1, ease: "easeOut" }}
+          >
+            CREATIVE<br/>DEVELOPER
+          </motion.div>
+        </div>
+
+        <div className="hero-metadata meta-right">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 1.1, ease: "easeOut" }}
+          >
+            BASED IN<br/>INDIA
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          className="hero-scroll-indicator"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.5 }}
+        >
+          <motion.div 
+            className="scroll-line"
+            animate={{ height: ["0%", "100%", "0%"], top: ["0%", "0%", "100%"] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </motion.div>
+
+      </div>
+      </motion.div>
     </section>
   );
 }

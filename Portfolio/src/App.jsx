@@ -8,6 +8,7 @@ import Projects from "./components/Projects";
 import Cta69 from "./components/Cta69";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/CustomCursor";
 import "./App.css";
 
 function App() {
@@ -16,11 +17,15 @@ function App() {
 
   return (
     <>
-      <Nav onOpenContact={() => setIsContactOpen(true)} />
-
+      <CustomCursor />
+      <div className="noise-overlay"></div>
       {!introFinished && (
         <Intro onComplete={() => setIntroFinished(true)} />
       )}
+      {introFinished && (
+        <Nav onOpenContact={() => setIsContactOpen(true)} />
+      )}
+
 
       <main className={introFinished ? "portfolio visible" : "portfolio"}>
         <Hero />
