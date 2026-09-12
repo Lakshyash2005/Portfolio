@@ -26,13 +26,39 @@ export default function Contact({ isOpen, onClose }) {
     };
   }, [isOpen, onClose]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      onClose();
-    }, 2000);
+    
+    // Create FormData object to gather all form inputs
+    const formData = new FormData(e.target);
+    
+    // Add the Web3Forms Access Key from environment variables
+    formData.append("access_key", import.meta.env.VITE_WEB3FORMS_ACCESS_KEY);
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: json
+      });
+      const result = await response.json();
+      
+      if (result.success) {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+        }, 3000);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
   };
 
   return (
@@ -97,6 +123,7 @@ export default function Contact({ isOpen, onClose }) {
                     <label>Your Name</label>
                     <input
                       type="text"
+                      name="name"
                       placeholder="Enter your name"
                       required
                     />
@@ -106,6 +133,7 @@ export default function Contact({ isOpen, onClose }) {
                     <label>Your Email</label>
                     <input
                       type="email"
+                      name="email"
                       placeholder="Enter your email"
                       required
                     />
@@ -115,6 +143,7 @@ export default function Contact({ isOpen, onClose }) {
                     <label>Subject</label>
                     <input
                       type="text"
+                      name="subject"
                       placeholder="What is this about?"
                     />
                   </div>
@@ -122,6 +151,7 @@ export default function Contact({ isOpen, onClose }) {
                   <div className="form-group">
                     <label>Message</label>
                     <textarea
+                      name="message"
                       rows="4"
                       placeholder="Tell me about your project..."
                       required
