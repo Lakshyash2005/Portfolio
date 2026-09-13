@@ -39,6 +39,7 @@
   color: #ffffff;
   margin: 0;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .hero-title span {
