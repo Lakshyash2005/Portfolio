@@ -70,6 +70,24 @@ const projects = [
   },
   {
     id: "04",
+    title: "Payroll System",
+    subtitle: "Management Dashboard",
+    description:
+      "Developed a full-stack Payroll Management System with role-based access, automated salary calculations, and an admin dashboard for managing employees and departments.",
+    work: [
+      "Role-based authentication (Admin/Employee)",
+      "Automated salary & deduction calculations",
+      "Department & employee CRUD operations",
+      "Payslip generation & export",
+      "Admin analytics dashboard",
+    ],
+    tech: ["Java", "Spring Boot", "MySQL", "Hibernate", "HTML", "CSS", "JavaScript"],
+    year: "2025",
+    type: "FULL-STACK",
+    link: null,
+  },
+  {
+    id: "05",
     title: "Karmakosha",
     subtitle: "Shopify E-commerce Store",
     description:
@@ -85,24 +103,6 @@ const projects = [
     tech: ["Shopify", "Liquid", "HTML5", "CSS", "JavaScript", "Google Analytics", "SEO"],
     year: "2024",
     type: "CLIENT WORK",
-    link: null,
-  },
-  {
-    id: "05",
-    title: "Payroll System",
-    subtitle: "Management Dashboard",
-    description:
-      "Developed a full-stack Payroll Management System with role-based access, automated salary calculations, and an admin dashboard for managing employees and departments.",
-    work: [
-      "Role-based authentication (Admin/Employee)",
-      "Automated salary & deduction calculations",
-      "Department & employee CRUD operations",
-      "Payslip generation & export",
-      "Admin analytics dashboard",
-    ],
-    tech: ["Java", "Spring Boot", "MySQL", "Hibernate", "HTML", "CSS", "JavaScript"],
-    year: "2025",
-    type: "FULL-STACK",
     link: null,
   },
 ];
