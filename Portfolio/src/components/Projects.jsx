@@ -70,6 +70,25 @@ const projects = [
   },
   {
     id: "04",
+    title: "Karmakosha",
+    subtitle: "Shopify E-commerce Store",
+    description:
+    "Designed, developed and optimized a Shopify e-commerce store specializing in certified Rudraksha, gemstones and spiritual products.",
+    work: [
+      "Customized Shopify themes & Liquid templates",
+      "Responsive UI/UX improvements",
+      "SEO-friendly content & meta optimization",
+      "Google Analytics, Tag Manager & Meta Pixel",
+      "Payment gateway & WhatsApp Business integration",
+      "Performance & conversion optimization",
+    ],
+    tech: ["Shopify", "Liquid", "HTML5", "CSS", "JavaScript", "Google Analytics", "SEO"],
+    year: "2024",
+    type: "CLIENT WORK",
+    link: null,
+  },
+  {
+    id: "05",
     title: "Automated Toll System",
     subtitle: "Full-Stack Toll & Plaza Management",
     description:
@@ -86,25 +105,6 @@ const projects = [
     year: "2026",
     type: "FULL-STACK",
     link: "https://github.com/Lakshyash2005/TOLL-SYSTEM",
-  },
-  {
-    id: "05",
-    title: "Karmakosha",
-    subtitle: "Shopify E-commerce Store",
-    description:
-      "Designed, developed and optimized a Shopify e-commerce store specializing in certified Rudraksha, gemstones and spiritual products.",
-    work: [
-      "Customized Shopify themes & Liquid templates",
-      "Responsive UI/UX improvements",
-      "SEO-friendly content & meta optimization",
-      "Google Analytics, Tag Manager & Meta Pixel",
-      "Payment gateway & WhatsApp Business integration",
-      "Performance & conversion optimization",
-    ],
-    tech: ["Shopify", "Liquid", "HTML5", "CSS", "JavaScript", "Google Analytics", "SEO"],
-    year: "2024",
-    type: "CLIENT WORK",
-    link: null,
   },
 ];
 
